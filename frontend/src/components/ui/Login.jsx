@@ -1,0 +1,100 @@
+import { useApp } from "../../context/AppContextProvider";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import RotatingTestCredentials from "./RotatingTestCredentials";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
+function Login() {
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+  };
+
+  const { loginUser } = useApp();
+  const { email, password } = userData;
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await loginUser(email, password);
+    if (res?.status == 200) {
+      navigate("/");
+    }
+    setUserData({ email: "", password: "" });
+  };
+
+  const togglePassword = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  return (
+    <div className="relative">
+      <div className="flex justify-center items-center h-screen mx-4 z-20">
+        <form
+          onSubmit={handleSubmit}
+          className="w-full sm:w-1/2 p-8 lg:w-1/3 bg-formBackground"
+        >
+          <p className="text-xl text-center font-semibold bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent leading-normal">
+            Login
+          </p>
+          <div className="mt-4">
+            <label className="block text-white text-sm font-semibold mb-2">
+              Email
+            </label>
+            <input
+              className=" text-black focus:outline-none focus:shadow-outline border rounded py-2 px-2 block w-full appearance-none"
+              name="email"
+              value={userData.email}
+              onChange={handleChange}
+              type="email"
+              required
+            />
+          </div>
+          <div className="mt-4">
+            <div className="flex justify-between">
+              <label className="block text-white text-sm font-semibold mb-2">
+                Password
+              </label>
+            </div>
+            <div className="flex justify-center items-center bg-white rounded">
+              <input
+                className="text-black focus:outline-none focus:shadow-outline rounded py-2 px-2 block w-full appearance-none"
+                name="password"
+                value={userData.password}
+                onChange={handleChange}
+                type={passwordVisible ? "text" : "password"}
+                required
+              />
+              <button type="button" className="px-1.5" onClick={togglePassword}>
+                {passwordVisible ? <FaEye /> : <FaEyeSlash />}
+              </button>
+            </div>
+          </div>
+          <div className="mt-8">
+            <button className="bg-primary text-white font-semibold py-3 px-2 w-full rounded-md cursor-pointer">
+              Login
+            </button>
+          </div>
+          <div className="mt-4 flex items-center justify-center text-white">
+            <p>
+              Don't have an Account?{" "}
+              <Link to="/signup" className="hover:underline">
+                Sign Up
+              </Link>
+            </p>
+          </div>
+        </form>
+      </div>
+      <span className="absolute bg-blue-800/40 w-60 md:w-80 h-60 md:h-80 rounded-full blur-3xl top-10 left-0 sm:top-20 sm:left-20 z-10"></span>
+      <span className="absolute bg-cyan-600/40 w-60 md:w-80 h-60 md:h-80 rounded-full blur-3xl bottom-10 -right-10 sm:bottom-20 sm:right-0 z-10"></span>
+    </div>
+  );
+}
+
+export default Login;
