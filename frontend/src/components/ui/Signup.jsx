@@ -37,7 +37,7 @@ function Signup() {
 
   return (
     <div className="relative">
-      <div className="flex justify-center items-center h-screen lg:mt-10 mx-4">
+      <div className="flex justify-center items-center h-screen lg:mt-10 mx-4 z-20">
         <form
           onSubmit={handleSubmit}
           className="w-full p-8 sm:w-1/2 lg:w-1/3 bg-formBackground"

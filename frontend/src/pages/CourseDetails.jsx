@@ -184,7 +184,7 @@ function CourseDetails() {
       <div className="mt-16 max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-2 gap-10">
         {/* Left Side Content */}
         <div className="px-4">
-          <div>
+          <div className="relative">
             {!imageLoaded && (
               <div className="w-full h-64 bg-gray-300 animate-pulse rounded-xl mb-6" />
             )}
@@ -194,6 +194,12 @@ function CourseDetails() {
               className="rounded-xl w-full h-auto object-cover mb-6 text-white shadow"
               onLoad={() => setImageLoaded(true)}
             />
+            <div className="absolute bg-gray-600 rounded-full top-2 right-2 px-3 py-2">
+              <div className="lg:px-2 flex justify-start items-center gap-1">
+                <img src={starIcon} alt="rating icon" className="w-4 h-4" />
+                <span className="font-medium text-white">4.5</span>
+              </div>
+            </div>
           </div>
           <h2 className="text-2xl font-bold mb-4 text-white">
             {course?.title}
@@ -211,10 +217,6 @@ function CourseDetails() {
               {course?.price} INR{" "}
               <s className="text-base">{course?.price + 250} INR</s>
             </p>
-            <div className="lg:px-2 flex justify-start items-center gap-1">
-              <img src={starIcon} alt="rating icon" className="w-4 h-4" />
-              <span className="font-medium text-white">4.5</span>
-            </div>
             <h2 className="font-medium text-lg text-white">
               Instructor: {course?.instructor?.name}
             </h2>
