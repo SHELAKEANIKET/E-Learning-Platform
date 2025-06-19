@@ -1,6 +1,7 @@
 import { Course } from "../models/course.model.js";
 import { Enrollment } from "../models/enrollment.model.js";
 import { User } from "../models/user.model.js";
+import mongoose from "mongoose";
 
 const enrollInCourse = async (req, res) => {
   try {
@@ -40,7 +41,7 @@ const getMonthlyRevenue = async (req, res) => {
     if (!req.user?.id) {
       return res.status(401).json({ error: "Unauthorized: No user ID" });
     }
-    
+
     const revenueData = await Enrollment.aggregate([
       {
         $lookup: {
