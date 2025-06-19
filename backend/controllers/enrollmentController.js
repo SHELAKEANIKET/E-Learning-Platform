@@ -37,6 +37,10 @@ const enrollInCourse = async (req, res) => {
 
 const getMonthlyRevenue = async (req, res) => {
   try {
+    if (!req.user?.id) {
+      return res.status(401).json({ error: "Unauthorized: No user ID" });
+    }
+    
     const revenueData = await Enrollment.aggregate([
       {
         $lookup: {
@@ -91,7 +95,7 @@ const getMonthlyRevenue = async (req, res) => {
     ];
 
     const fullData = months.map((label, index) => {
-      const monthData = revenueData.find((item) => item._id === index + 1);
+      const monthData = revenueData?.find((item) => item._id === index + 1);
       return {
         label,
         revenue: monthData ? monthData.totalRevenue : 0,
