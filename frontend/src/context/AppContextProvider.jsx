@@ -9,7 +9,7 @@ export const useApp = () => {
 };
 
 function AppContextProvider({ children }) {
-  const baseUrl = "http://localhost:9000/api";
+  const baseUrl = "https://e-learning-platform-ht9m.onrender.com/api";
   const [courses, setCourses] = useState([]); // all courses
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
@@ -162,7 +162,7 @@ function AppContextProvider({ children }) {
           withCredentials: true,
         }
       );
-       return res;
+      return res;
     } catch (error) {
       console.error("Error while adding new lessons:", error.message);
     }
