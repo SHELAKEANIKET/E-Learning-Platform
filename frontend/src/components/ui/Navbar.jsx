@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useApp } from "../../context/AppContextProvider";
 import { Link } from "react-router-dom";
 import { User } from "lucide-react";
+import userProfile from "/assets/userProfile.jpg";
 
 function Navbar() {
   const { user, logout, authLoading } = useApp();
@@ -40,10 +41,10 @@ function Navbar() {
     setIsOpen(!open);
   };
   return (
-    <nav className="py-4 px-4 fixed top-0 w-full shadow z-50 bg-transparent bg-opacity-5 backdrop-filter backdrop-blur-xl">
-      <div className="px-4 flex items-center justify-between gap-4 w-full">
+    <nav className="py-4 px-4 fixed top-0 left-0 w-full shadow z-50 bg-transparent bg-opacity-5 backdrop-filter backdrop-blur-xl">
+      <div className="px-1 lg:px-4 flex items-center justify-between gap-4 w-full">
         {/* Logo */}
-        <div className="text-lg md:text-lg lg:text-xl font-bold bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent leading-normal">
+        <div className="text-lg md:text-lg lg:text-xl font-bold bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent leading-normal">
           <Link to="/">EduHub</Link>
         </div>
         <div>
@@ -52,15 +53,15 @@ function Navbar() {
           ) : (
             <>
               {user == null && (
-                <div className="flex items-center justify-end gap-4">
+                <div className="flex items-center justify-end gap-3">
                   <Link
-                    className="inline-flex items-center justify-center text-base font-medium px-4 py-2 text-white"
+                    className="inline-flex items-center justify-center text-base font-medium px-4 py-2 text-white hover:bg-formBackground hover:rounded"
                     to="/login"
                   >
                     Login
                   </Link>
                   <Link
-                    className="inline-flex items-center justify-center rounded bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm transition-all duration-150"
+                    className="inline-flex items-center justify-center rounded bg-gradient-to-r from-gradient-start to-gradient-end px-4 py-2 text-sm font-medium text-white shadow-sm transition-all duration-150"
                     to="/signup"
                   >
                     Sign Up
@@ -76,9 +77,9 @@ function Navbar() {
                 <button
                   ref={buttonRef}
                   onClick={toggleDropdown}
-                  className="text-white border-2 border-white rounded-full cursor-pointer"
+                  className="text-white border-2 rounded-full cursor-pointer"
                 >
-                  <User />
+                  <img src={userProfile} className="w-7 h-7 lg:w-9 lg:h-9 rounded-full" alt="userProfile" />
                 </button>
               </div>
 

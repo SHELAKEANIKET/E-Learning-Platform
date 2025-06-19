@@ -15,10 +15,11 @@ function Testimonal() {
   }, [emblaApi]);
 
   return (
-    <div className="my-10 py-10 ">
+    <div className="my-10 py-10 relative">
+      <span className="absolute bg-cyan-600/40 w-40 h-40 lg:w-60 lg:h-60 rounded-full blur-3xl bottom-0 -left-10 sm:bottom-0 sm:left-0 z-10"></span>
       <div className="flex justify-center items-center flex-col gap-10 mx-4">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent leading-normal">
-          Testimonial 
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent leading-normal">
+          Testimonial
         </h1>
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex my-4 max-w-2xl">
@@ -85,12 +86,18 @@ function Testimonal() {
             </div>
           </div>
           <div className="flex justify-center items-center gap-5 pt-5">
-            <button className="text-[#1cb49b] border-2 border-[#1cb49b] rounded-full p-1" onClick={scrollPrev}>
+            <button
+              className="text-[#1cb49b] border-2 border-[#1cb49b] rounded-full p-1"
+              onClick={scrollPrev}
+            >
               <ChevronLeft />
             </button>
-            <button className="text-[#1cb49b] border-2 border-[#1cb49b] rounded-full p-1" onClick={scrollNext}>
+            <button
+              className="text-[#1cb49b] border-2 border-[#1cb49b] rounded-full p-1"
+              onClick={scrollNext}
+            >
               <ChevronRight />
-            </button> 
+            </button>
           </div>
         </div>
       </div>

@@ -2,8 +2,11 @@ import React from "react";
 import heroImg from "/assets/e-learning.jpg";
 import { Link } from "react-router-dom";
 import { Fade } from "react-awesome-reveal";
+import { useApp } from "../../context/AppContextProvider";
 
 const HeroSection = () => {
+  const { user } = useApp();
+
   return (
     <section className="pt-20 lg:pt-24 pb-20 px-5 md:px-10 my-8 relative">
       <div className="grid grid-cols-1 md:grid-cols-2 place-items-center gap-6 lg:gap-5 z-20">
@@ -12,7 +15,7 @@ const HeroSection = () => {
           <Fade triggerOnce>
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 tracking-wide font-custom">
               Unlock Your Learning Potential With{" "}
-              <span className="bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent leading-normal">
+              <span className="bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent leading-normal">
                 EduHub
               </span>
             </h1>
@@ -21,13 +24,23 @@ const HeroSection = () => {
             Join thousands of learners and access top-quality courses, anytime,
             anywhere.
           </p>
-          <Link
-            to="/allcourses"
-            className="bg-primary text-white px-4 py-3 rounded-lg font-semibold text-lg inset-1 transition-all shadow hover:ring-1 hover:ring-white duration-300 hover:ring-offset-1
+          {user == null ? (
+            <Link
+              to="/login"
+              className="bg-gradient-to-r from-gradient-start to-gradient-end text-white px-4 py-3 rounded-lg font-semibold text-lg inset-1 transition-all shadow hover:ring-1 hover:ring-white duration-300 hover:ring-offset-1
 "
-          >
-            Get Started
-          </Link>
+            >
+              Get Started
+            </Link>
+          ) : (
+            <Link
+              to="/allcourses"
+              className="bg-gradient-to-r from-gradient-start to-gradient-end text-white px-4 py-3 rounded-lg font-semibold text-lg inset-1 transition-all shadow hover:ring-1 hover:ring-white duration-300 hover:ring-offset-1
+"
+            >
+              Browse Courses
+            </Link>
+          )}
         </div>
 
         {/* right side */}
@@ -35,50 +48,15 @@ const HeroSection = () => {
           <img
             src={heroImg}
             alt="e-learning"
-            className="z-10 lg:max-w-lg object-contain rounded-2xl shadow-lg order-1"
+            className="z-10 lg:max-w-md object-contain rounded-2xl shadow-lg order-1"
           />
         </div>
       </div>
 
-      {/* <div className="absolute bottom-50 right-10">
-        <svg
-          width="60"
-          height="60"
-          viewBox="0 0 200 200"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {" "}
-          <g clipPath="url(#clip0_104_26)">
-            {" "}
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M107.143 0H92.8571V82.7556L34.3401 24.2385L24.2386 34.3401L82.7556 92.8571H0V107.143H82.7555L24.2386 165.66L34.3401 175.761L92.8571 117.244V200H107.143V117.244L165.66 175.761L175.761 165.66L117.244 107.143H200V92.8571H117.244L175.761 34.34L165.66 24.2385L107.143 82.7555V0Z"
-              fill="url(#paint0_linear_104_26)"
-            />{" "}
-          </g>{" "}
-          <defs>
-            {" "}
-            <linearGradient
-              id="paint0_linear_104_26"
-              x1="20.5"
-              y1="16"
-              x2="100"
-              y2="200"
-              gradientUnits="userSpaceOnUse"
-            >
-              {" "}
-              <stop stopColor="#ACAAFF" />{" "}
-              <stop offset="1" stopColor="#C0E8FF" />{" "}
-            </linearGradient>{" "}
-            <clipPath id="clip0_104_26">
-              {" "}
-              <rect width="200" height="200" fill="white" />{" "}
-            </clipPath>{" "}
-          </defs>{" "}
-        </svg>
-      </div> */}
+      <div className="absolute bottom-4 right-4 text-gray-500 select-none animate-bounce">
+        <code>hello world</code>
+      </div>
+
       <div className="absolute top-10 right-5 rotate-45">
         <svg
           width="60"

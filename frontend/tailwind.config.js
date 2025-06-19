@@ -8,9 +8,11 @@ export default {
       },
       colors: {
         primary: "#21a38e",
-        // background: "#1b1b1e",
         background: "#0F0F0F",
         formBackground: "#18191a",
+        borderColor: "#6b7280",
+        "gradient-start": "#5591f1",
+        "gradient-end": "#0dbfa1",
       },
       fontFamily: {
         sans: ["sans-serif"],

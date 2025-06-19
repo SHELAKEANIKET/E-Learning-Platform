@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useApp } from "../../../context/AppContextProvider";
 import React, { useState } from "react";
 import { MdEdit, MdDelete } from "react-icons/md";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import Modal from "../Modal";
 
 function CourseLessons() {
   const [openCourse, setOpenCourse] = useState(null);
@@ -31,24 +33,24 @@ function CourseLessons() {
   };
 
   return (
-    <div className="space-y-4 mx-2 lg:mx-20">
+    <div className="space-y-4 mx-1 lg:mx-20">
       {instructorCourses.length > 0 ? (
         <>
-          <h2 className="text-white text-xl m">Course Lessons</h2>
+          <h2 className="text-white text-xl">Course Lessons</h2>
           {instructorCourses?.map((course) => (
             <div
               key={course._id}
-              className="border rounded-lg p-4 bg-white shadow"
+              className="rounded-lg p-4 bg-formBackground shadow"
             >
               <div className="flex justify-between items-center">
-                <h2 className="text-lg font-medium">{course.title}</h2>
+                <h2 className="text-lg font-medium text-white">{course.title}</h2>
                 <button
                   onClick={() =>
                     setOpenCourse(openCourse === course._id ? null : course._id)
                   }
-                  className="text-sm text-blue-600"
+                  className="text-sm text-primary"
                 >
-                  {openCourse === course._id ? "Hide" : "Show"}
+                  {openCourse === course._id ? <ChevronUp /> : <ChevronDown />}
                 </button>
               </div>
               {openCourse === course._id && (
@@ -58,20 +60,21 @@ function CourseLessons() {
                       {course.lessons?.map((lesson, index) => (
                         <li
                           key={lesson._id}
-                          className="border p-2 rounded flex justify-between items-center"
+                          className="border border-borderColor p-2 rounded flex justify-between items-center"
                         >
-                          <span className="font-medium">
+                          <span className="font-medium text-white">
                             {index + 1}. {lesson.title}
                           </span>
-                          <div className="flex gap-2">
+                          <div className="flex gap-1 lg:gap-2.5">
+                            <Modal videoUrl={lesson?.videoUrl} />
                             <button
-                              className="text-yellow-500"
+                              className="text-yellow-500 hover:text-yellow-600"
                               onClick={() => handleEditClick(lesson)}
                             >
                               <MdEdit className="size-5" />
                             </button>
                             <button
-                              className="text-red-500"
+                              className="text-red-500 hover:text-red-600"
                               onClick={() => handleDeleteClick(lesson._id)}
                             >
                               <MdDelete className="size-5" />

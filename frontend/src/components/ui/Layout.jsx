@@ -14,7 +14,7 @@ function Layout() {
   }, [pathname]);
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col max-w-screen-xl mx-auto">
       <Navbar />
       <main className="flex-grow">
         <Outlet />

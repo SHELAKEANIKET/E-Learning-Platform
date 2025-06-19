@@ -49,9 +49,9 @@ function AddCourse() {
     <div className="flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
-        className="w-full p-8 border rounded-lg max-w-xl bg-formBackground"
+        className="w-full p-2 md:p-8 rounded-lg max-w-xl bg-formBackground"
       >
-        <p className="text-xl text-primary text-center font-semibold">
+        <p className="text-xl text-white text-center font-semibold">
           Add Course
         </p>
         <div className="mt-4">
@@ -144,7 +144,7 @@ function AddCourse() {
           />
         </div>
         <div className="mt-8">
-          <button className="bg-primary text-white font-semibold py-3 px-2 w-full rounded-md cursor-pointer">
+          <button className="bg-gradient-to-r from-gradient-start to-gradient-end text-white font-semibold py-3 px-2 w-full rounded-md cursor-pointer">
             Add Course
           </button>
         </div>

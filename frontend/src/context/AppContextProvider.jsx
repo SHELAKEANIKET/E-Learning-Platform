@@ -115,7 +115,13 @@ function AppContextProvider({ children }) {
     }
   };
 
-  const addCourse = async ({title, description, category, price, courseThumbnail}) => {
+  const addCourse = async ({
+    title,
+    description,
+    category,
+    price,
+    courseThumbnail,
+  }) => {
     try {
       const res = await axios.post(
         `${baseUrl}/course/add`,
@@ -140,7 +146,7 @@ function AppContextProvider({ children }) {
     }
   };
 
-  const addLessonInCourse = async (title, content, videoUrl, id) => {
+  const addLessonInCourse = async ({ title, content, videoUrl }, id) => {
     try {
       const res = await axios.post(
         `${baseUrl}/lesson/add/${id}`,
@@ -156,8 +162,7 @@ function AppContextProvider({ children }) {
           withCredentials: true,
         }
       );
-
-      return res;
+       return res;
     } catch (error) {
       console.error("Error while adding new lessons:", error.message);
     }

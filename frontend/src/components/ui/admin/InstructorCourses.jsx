@@ -34,7 +34,7 @@ const InstructorCourses = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 sm:px-20">
+    <div className="container mx-auto px-4 md:px-20">
       {instructorCourses?.length > 0 ? (
         <>
           <div>
@@ -43,8 +43,8 @@ const InstructorCourses = () => {
             </h1>
           </div>
           <div className="py-2">
-            <div className="w-full overflow-x-auto block">
-              <table className="w-full min-w-[800px] border border-gray-600">
+            <div className="w-full overflow-x-auto block bg-formBackground">
+              <table className="w-full min-w-[800px] border border-borderColor">
                 <thead className="bg-gray-100">
                   <tr>
                     <th className="px-6 py-3 text-left text-base font-semibold text-black whitespace-nowrap">
@@ -95,7 +95,7 @@ const InstructorCourses = () => {
                       <td className="px-6 py-3 whitespace-nowrap">
                         <div className="flex items-center gap-4">
                           <button
-                            className="text-blue-500 hover:text-blue-600"
+                            className="text-yellow-500 hover:text-yellow-600"
                             onClick={() => handleEditClick(course)}
                           >
                             <Pencil size={18} />

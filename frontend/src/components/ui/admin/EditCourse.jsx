@@ -91,7 +91,7 @@ function EditCourse() {
     <div className="flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-xl p-8 border rounded-lg bg-formBackground"
+        className="w-full max-w-xl p-8 rounded-lg bg-formBackground"
       >
         <p className="text-xl text-white text-center font-medium">
           Edit Course
@@ -183,7 +183,7 @@ function EditCourse() {
           />
         </div>
         <div className="mt-8">
-          <button className="bg-primary text-white font-semibold py-3 px-2 w-full rounded-md cursor-pointer">
+          <button className="bg-gradient-to-r from-gradient-start to-gradient-end text-white font-semibold py-3 px-2 w-full rounded-md cursor-pointer">
             Edit Course
           </button>
         </div>

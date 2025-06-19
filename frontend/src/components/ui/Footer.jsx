@@ -60,7 +60,7 @@ function Footer() {
           </div>
         </div>
       </div>
-      <h1 className="mt-10 text-6xl sm:text-7xl lg:text-[144px] tracking-wider font-extrabold bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent leading-normal">
+      <h1 className="mt-10 text-6xl sm:text-7xl lg:text-[144px] tracking-wider font-extrabold bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent leading-normal">
         EDUHUB
       </h1>
     </div>

@@ -31,6 +31,7 @@ function Dashboard() {
   defaults.plugins.title.align = "start";
   defaults.plugins.title.font.size = 24;
   defaults.plugins.title.color = "black";
+  defaults.plugins.backgroundColor = "black";
 
   return (
     <>
@@ -41,44 +42,72 @@ function Dashboard() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto mt-6 bg-white p-4 shadow h-[420px]">
-        <Bar
-          data={{
-            labels: revenueData.map((data) => data.label),
-            datasets: [
-              {
-                label: "Revenue",
-                data: revenueData.map((data) => data.revenue),
-                backgroundColor: [
-                  "rgba(255, 99, 132, 0.8)",
-                  "rgba(255, 159, 64, 0.8)",
-                  "rgba(255, 205, 86, 0.8)",
-                  "rgba(75, 192, 192, 0.8)",
-                  "rgba(153, 102, 255, 0.8)",
-                  "rgba(54, 162, 235, 0.8)",
-                ],
-              },
-            ],
-          }}
-          options={{
-            plugins: {
-              title: {
-                text: "Monthly Revenue",
-              },
-            },
-            scales: {
-              y: {
-                beginAtZero: true,
-                suggestedMax: 5000,
-                ticks: {
-                  stepSize: 1000,
-                  callback: (value) => `${value}`,
+      {revenueData?.length > 0 ? (
+        <div className="max-w-4xl mx-auto mt-6 bg-formBackground p-4 shadow h-[420px]">
+          <Bar
+            data={{
+              labels: revenueData.map((data) => data.label),
+              datasets: [
+                {
+                  label: "Revenue",
+                  data: revenueData.map((data) => data.revenue),
+                  backgroundColor: [
+                    "rgba(255, 99, 132, 0.8)",
+                    "rgba(255, 159, 64, 0.8)",
+                    "rgba(255, 205, 86, 0.8)",
+                    "rgba(75, 192, 192, 0.8)",
+                    "rgba(153, 102, 255, 0.8)",
+                    "rgba(54, 162, 235, 0.8)",
+                  ],
+                },
+              ],
+            }}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                title: {
+                  display: true,
+                  text: "Monthly Revenue",
+                  color: "white",
+                },
+                legend: {
+                  labels: {
+                    color: "white",
+                  },
                 },
               },
-            },
-          }}
-        />
-      </div>
+              scales: {
+                x: {
+                  ticks: {
+                    color: "white",
+                    font: {
+                      size: 12,
+                    },
+                  },
+                  grid: {
+                    color: "rgba(255,255,255,0.1)",
+                  },
+                },
+                y: {
+                  beginAtZero: true,
+                  suggestedMax: 5000,
+                  ticks: {
+                    stepSize: 1000,
+                    color: "white",
+                    callback: (value) => `${value}`,
+                  },
+                  grid: {
+                    color: "rgba(255,255,255,0.1)",
+                  },
+                },
+              },
+            }}
+          />
+        </div>
+      ) : (
+        ""
+      )}
     </>
   );
 }

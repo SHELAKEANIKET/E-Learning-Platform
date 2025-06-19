@@ -42,7 +42,7 @@ function Signup() {
           onSubmit={handleSubmit}
           className="w-full p-8 sm:w-1/2 lg:w-1/3 bg-formBackground"
         >
-          <p className="text-xl text-center font-semibold bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent leading-normal">
+          <p className="text-xl text-center font-semibold text-white">
             Create Account
           </p>
 
@@ -111,7 +111,7 @@ function Signup() {
             </select>
           </div>
           <div className="mt-8">
-            <button className="bg-primary text-white font-semibold py-3 px-2 w-full rounded-md cursor-pointer">
+            <button className="bg-gradient-to-r from-gradient-start to-gradient-end text-white font-semibold py-3 px-2 w-full rounded-md cursor-pointer">
               Sign Up
             </button>
           </div>

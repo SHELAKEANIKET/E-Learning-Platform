@@ -31,7 +31,7 @@ export function Sidebar() {
       {/* Sidebar */}
       <aside
         id="default-sidebar"
-        className={`fixed top-[60px] left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0 bg-[#1c1d20] text-white ${
+        className={`fixed top-[60px] left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0 bg-formBackground text-white ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
         aria-label="Sidebar"
@@ -41,6 +41,7 @@ export function Sidebar() {
             <li>
               <NavLink
                 to="/"
+                onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
                   `flex items-center p-2 rounded-md ${
                     isActive
@@ -56,6 +57,7 @@ export function Sidebar() {
             <li>
               <NavLink
                 to="/instructor/dashboard"
+                onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
                   `flex items-center p-2 rounded-md ${
                     isActive
@@ -71,6 +73,7 @@ export function Sidebar() {
             <li>
               <NavLink
                 to="/instructor/profile"
+                onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
                   `flex items-center p-2 rounded-md ${
                     isActive
@@ -86,6 +89,7 @@ export function Sidebar() {
             <li>
               <NavLink
                 to="/instructor/courses"
+                onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
                   `flex items-center p-2 rounded-md ${
                     isActive
@@ -101,6 +105,7 @@ export function Sidebar() {
             <li>
               <NavLink
                 to="/instructor/lessons"
+                onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
                   `flex items-center p-2 rounded-md ${
                     isActive
@@ -118,6 +123,7 @@ export function Sidebar() {
             <li>
               <NavLink
                 to="/instructor/addcourse"
+                onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
                   `flex items-center p-2 rounded-md ${
                     isActive

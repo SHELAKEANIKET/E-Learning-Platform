@@ -6,8 +6,8 @@ import { Slide, Zoom } from "react-awesome-reveal";
 const WhyChooseUs = () => {
   return (
     <section className="relative py-4">
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/25 to-cyan-500/25 blur-3xl"></div>
-      <div className="flex flex-col md:flex-row items-center justify-center md:gap-10 px-6 py-20 max-w-7xl mx-auto relative opacity-100">
+      <span className="absolute bg-blue-600/40 w-60 h-60 rounded-full blur-3xl top-0 -right-10 sm:top-20 sm:right-0 z-10"></span>
+      <div className="flex flex-col md:flex-row items-center justify-center md:gap-10 px-6 py-20 max-w-7xl mx-auto relative opacity-100 z-20">
         <div className="w-full md:w-1/3 mb-8 md:mb-0">
           <img
             src={onlineLearningImage}

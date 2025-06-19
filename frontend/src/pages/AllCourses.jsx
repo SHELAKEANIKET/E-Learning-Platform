@@ -23,7 +23,7 @@ function AllCourses() {
     return (
       <div className="my-20 lg:mx-20 mx-3">
         <div className="flex justify-center items-center flex-col">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent leading-normal">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent leading-normal">
             Our Courses
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-5 gap-4 lg:gap-10 place-items-center my-8">
@@ -44,28 +44,26 @@ function AllCourses() {
   });
 
   return (
-    <div className="my-20 lg:mx-20 mx-3">
+    <div className="my-20 lg:mx-16 mx-2">
       <div className="flex justify-center items-center flex-col">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent leading-normal">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent leading-normal">
           Our Courses
         </h1>
-        <Fade triggerOnce>
-          <div className="flex justify-start items-start flex-wrap gap-2 m-4">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-4 py-2 rounded-full border border-gray-700 ${
-                  selectedCategory === cat
-                    ? "bg-primary text-white"
-                    : "bg-transparent text-white"
-                } hover:bg-primary hover:text-white transition-all`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </Fade>
+        <div className="flex justify-start lg:justify-center items-center w-full m-4 px-4 gap-2 lg:overflow-x-hidden overflow-x-auto scroll-smooth hide-scrollbar">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`px-4 py-2 rounded-full border border-gray-700 text-center ${
+                selectedCategory === cat
+                  ? "bg-primary text-white"
+                  : "bg-transparent text-white"
+              } hover:bg-primary hover:text-white transition-all whitespace-nowrap`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
         <Fade triggerOnce>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-4 gap-4 lg:gap-6 my-8">
             {filteredCourses.length > 0 ? (

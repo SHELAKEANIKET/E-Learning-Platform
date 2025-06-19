@@ -12,7 +12,7 @@ function Courses() {
     return (
       <div className="my-10 lg:mx-20 mx-3">
         <div className="flex justify-center items-center flex-col">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent leading-normal">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent leading-normal">
             Our Courses
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-5 gap-4 lg:gap-16 place-items-center my-8">
@@ -26,14 +26,14 @@ function Courses() {
   }
 
   return (
-    <div className="my-20 lg:mx-20 mx-3 relative">
+    <div className="my-20 lg:mx-16 mx-3 relative">
       <div className="flex justify-center items-center flex-col">
         <Zoom triggerOnce>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent leading-normal">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent leading-normal">
             Our Courses
           </h1>
         </Zoom>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-4 gap-4 lg:gap-6 place-items-center my-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-4 gap-4 lg:gap-5 place-items-center my-8">
           {courses &&
             courses?.slice(0, 3).map((course, index) => (
               <div
@@ -72,12 +72,12 @@ function Courses() {
         </div>
         <Link
           to="/allcourses"
-          className="bg-primary text-white px-3 py-2 rounded text-base font-semibold cursor-pointer inset-1 transition-all shadow hover:ring-1 hover:ring-white duration-300 hover:ring-offset-1"
+          className="bg-gradient-to-r from-gradient-start to-gradient-end text-white px-3 py-2 rounded text-base font-semibold cursor-pointer inset-1 transition-all shadow hover:ring-1 hover:ring-white duration-300 hover:ring-offset-1"
         >
           Explore More
         </Link>
       </div>
-      <div className="absolute bottom-2">
+      <div className="absolute -bottom-4">
         <svg
           viewBox="0 0 256 256"
           width="30"
