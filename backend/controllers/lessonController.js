@@ -144,7 +144,7 @@ const updateLesson = async (req, res) => {
       }
     );
 
-    res.status(200).json({ updatedLesson, message: "Lesson updated ..." });
+    res.status(200).json({ updatedLesson, message: "Lesson updated..." });
   } catch (error) {
     res
       .status(500)

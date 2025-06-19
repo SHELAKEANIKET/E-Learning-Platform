@@ -6,8 +6,6 @@ const addCourse = async (req, res) => {
   try {
     const { title, description, category, price } = req.body;
 
-    console.log("Title value:", title); // should be a string
-
     if (req.user.role !== "instructor") {
       return res
         .status(400)
@@ -68,7 +66,7 @@ const addCourse = async (req, res) => {
 const getAllCourses = async (req, res) => {
   try {
     const courses = await Course.find()
-      .sort({createdAt: -1})
+      .sort({ createdAt: -1 })
       .populate("instructor", "name email")
       .populate({ path: "studentsEnrolled", select: "name" })
       .populate({ path: "lessons", select: "title" });
@@ -90,7 +88,12 @@ const getInstructorCourses = async (req, res) => {
     const courses = await Course.find({ instructor: instructorId })
       .populate("instructor", "name email")
       .populate({ path: "studentsEnrolled", select: "name" })
-      .populate({ path: "lessons", select: "title" });
+      .populate({ path: "lessons", select: "title videoUrl" });
+
+    if (!courses) {
+      res.status(400).json({ message: "Course Not Found" });
+    }
+
     res
       .status(200)
       .json({ courses, message: "Courses fetched successfully.." });
