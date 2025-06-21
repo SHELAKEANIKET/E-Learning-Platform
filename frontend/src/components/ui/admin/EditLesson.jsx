@@ -123,6 +123,7 @@ function EditLesson() {
             name="videoUrl"
             onChange={handleChange}
             type="file"
+            accept="video/*"
           />
         </div>
         <div className="mt-8">

@@ -91,6 +91,7 @@ function AddLesson() {
             name="videoUrl"
             onChange={handleChange}
             type="file"
+            accept="video/*"
             required
           />
         </div>

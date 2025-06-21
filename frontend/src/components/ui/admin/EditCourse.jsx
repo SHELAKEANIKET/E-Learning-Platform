@@ -180,6 +180,7 @@ function EditCourse() {
             name="courseThumbnail"
             onChange={handleChange}
             type="file"
+            accept="image/*"
           />
         </div>
         <div className="mt-8">

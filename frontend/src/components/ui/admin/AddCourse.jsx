@@ -140,6 +140,7 @@ function AddCourse() {
             name="courseThumbnail"
             onChange={handleChange}
             type="file"
+            accept="image/*"
             required
           />
         </div>
