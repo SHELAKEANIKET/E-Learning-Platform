@@ -17,6 +17,7 @@ function EditCourse() {
   const { baseUrl, getCourseById } = useApp();
   const { id } = useParams();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -51,6 +52,7 @@ function EditCourse() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const form = new FormData();
 
@@ -84,6 +86,8 @@ function EditCourse() {
       });
     } catch (error) {
       console.error("Error while editing course:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -93,7 +97,7 @@ function EditCourse() {
         onSubmit={handleSubmit}
         className="w-full max-w-xl p-8 rounded-lg bg-formBackground"
       >
-        <p className="text-xl text-white text-center font-medium">
+        <p className="text-xl text-white text-center font-semibold">
           Edit Course
         </p>
         <div className="mt-4">
@@ -184,8 +188,15 @@ function EditCourse() {
           />
         </div>
         <div className="mt-8">
-          <button className="bg-gradient-to-r from-gradient-start to-gradient-end text-white font-semibold py-3 px-2 w-full rounded-md cursor-pointer">
-            Edit Course
+          <button
+            disabled={isLoading}
+            className="bg-gradient-to-r from-gradient-start to-gradient-end text-white font-semibold py-3 px-2 w-full rounded-md cursor-pointer flex justify-center items-center text-center"
+          >
+            {isLoading ? (
+              <div className="border-formBackground h-5 w-5 animate-spin rounded-full border-[3px] border-t-cyan-600" />
+            ) : (
+              "Edit Course"
+            )}
           </button>
         </div>
       </form>

@@ -16,6 +16,7 @@ function EditLesson() {
   const { id } = useParams();
   const { baseUrl, getLessonById } = useApp();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -48,6 +49,7 @@ function EditLesson() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const form = new FormData();
 
@@ -76,6 +78,8 @@ function EditLesson() {
       });
     } catch (error) {
       console.error("Error while editing lesson:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -127,8 +131,15 @@ function EditLesson() {
           />
         </div>
         <div className="mt-8">
-          <button className="bg-gradient-to-r from-gradient-start to-gradient-end text-white font-semibold py-3 px-2 w-full rounded-md cursor-pointer">
-            Edit Lesson
+          <button
+            disabled={isLoading}
+            className="bg-gradient-to-r from-gradient-start to-gradient-end text-white font-semibold py-3 px-2 w-full rounded-md cursor-pointer flex justify-center items-center text-center"
+          >
+            {isLoading ? (
+              <div className="border-formBackground h-5 w-5 animate-spin rounded-full border-[3px] border-t-cyan-600" />
+            ) : (
+              "Edit Lesson"
+            )}
           </button>
         </div>
       </form>
