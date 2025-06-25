@@ -194,7 +194,7 @@ function CourseDetails() {
               className="rounded-xl w-full h-auto object-cover mb-6 text-white shadow"
               onLoad={() => setImageLoaded(true)}
             />
-            <div className="absolute bg-formBackground backdrop-blur-lg rounded-full top-2 right-2 py-1 px-1.5">
+            <div className="absolute bg-formBackground backdrop-blur-lg rounded-full top-2 right-2 py-1 px-2.5 lg:px-1.5">
               <div className="lg:px-2 flex justify-start items-center gap-1">
                 <img src={starIcon} alt="rating icon" className="w-4 h-4" />
                 <span className="font-medium text-white">4.5</span>
@@ -257,7 +257,7 @@ function CourseDetails() {
                           selectedLesson?._id === lesson._id
                             ? "bg-white/80 text-black"
                             : "text-white"
-                        } ${isEnrolled ? "w-[70%]" : "w-full"}`}
+                        } ${isEnrolled ? "w-full lg:w-[70%]" : "w-full"}`}
                         onClick={() => handleLessonClick(lesson)}
                       >
                         <span className="font-medium">
