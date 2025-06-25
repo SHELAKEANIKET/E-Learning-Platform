@@ -194,7 +194,7 @@ function CourseDetails() {
               className="rounded-xl w-full h-auto object-cover mb-6 text-white shadow"
               onLoad={() => setImageLoaded(true)}
             />
-            <div className="absolute bg-gray-600 rounded-full top-2 right-2 px-3 py-2">
+            <div className="absolute bg-formBackground backdrop-blur-lg rounded-full top-2 right-2 p-1">
               <div className="lg:px-2 flex justify-start items-center gap-1">
                 <img src={starIcon} alt="rating icon" className="w-4 h-4" />
                 <span className="font-medium text-white">4.5</span>

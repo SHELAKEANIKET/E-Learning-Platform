@@ -42,7 +42,7 @@ function Navbar() {
   };
   return (
     <nav className="py-4 px-4 fixed top-0 left-0 w-full shadow z-50 bg-transparent bg-opacity-5 backdrop-filter backdrop-blur-xl">
-      <div className="px-1 lg:px-4 flex items-center justify-between gap-4 w-full">
+      <div className="px-1 lg:px-4 flex items-center justify-between gap-4 w-full max-w-screen-xl mx-auto">
         {/* Logo */}
         <div className="text-lg md:text-lg lg:text-xl font-bold bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent leading-normal">
           <Link to="/">EduHub</Link>
