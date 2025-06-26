@@ -42,7 +42,7 @@ const checkout = async (req, res) => {
         customer_email: req.user?.email,
       },
       order_meta: {
-        return_url: `http://localhost:5173/payment-success?order_id=${orderId}&course_id=${courseId}`, // frontend URL
+        return_url: `https://eduhub-elearning.vercel.app/payment-success?order_id=${orderId}&course_id=${courseId}`, // frontend URL
       },
     };
 
