@@ -1,7 +1,6 @@
 import { useApp } from "../../context/AppContextProvider";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import RotatingTestCredentials from "./RotatingTestCredentials";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Login() {

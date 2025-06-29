@@ -114,7 +114,9 @@ function Signup() {
               onChange={handleChange}
               className="text-black focus:outline-none focus:shadow-outline border border-borderColor rounded py-2 px-2 block w-full appearance-none cursor-pointer"
             >
-              <option value="">Select Your Role</option>
+              <option value="" disabled selected>
+                Select Your Role
+              </option>
               <option value="student">Student</option>
               <option value="instructor">Instructor</option>
             </select>
