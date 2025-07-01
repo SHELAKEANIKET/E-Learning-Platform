@@ -114,7 +114,7 @@ function AddCourse() {
             onChange={handleChange}
             className="bg-transparent text-white focus:outline-none focus:shadow-outline border rounded py-2 px-2 block w-full appearance-none cursor-pointer overflow-hidden"
           >
-            <option value="" className="bg-[#1f2024]">
+            <option value="" disabled selected className="bg-[#1f2024]">
               Select Course Category
             </option>
             <option value="Programming" className="bg-[#1f2024]">
