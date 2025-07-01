@@ -33,6 +33,10 @@ const InstructorCourses = () => {
     }
   };
 
+  const handleUploadPdf = async (course) => {
+    navigate(`/instructor/course/upload-pdf/${course._id}`);
+  };
+
   return (
     <div className="container mx-auto px-4 md:px-20">
       {instructorCourses?.length > 0 ? (
@@ -63,6 +67,9 @@ const InstructorCourses = () => {
                       Created On
                     </th>
                     <th className="px-6 py-3 text-left text-base font-semibold text-black whitespace-nowrap">
+                      Docs
+                    </th>
+                    <th className="px-6 py-3 text-left text-base font-semibold text-black whitespace-nowrap">
                       Actions
                     </th>
                   </tr>
@@ -91,6 +98,26 @@ const InstructorCourses = () => {
                       </td>
                       <td className="px-6 py-3 font-medium whitespace-nowrap">
                         {course.createdAt?.slice(0, 10)}
+                      </td>
+                      <td className="px-6 py-3 font-medium whitespace-nowrap">
+                        {course.pdfs?.length > 0 ? (
+                          <div className="flex justify-center items-center gap-2">
+                            <span>{`${course.pdfs.length} PDF`}</span> {"|"}
+                            <button
+                              onClick={() => handleUploadPdf(course)}
+                              className="hover:underline"
+                            >
+                              Upload New
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => handleUploadPdf(course)}
+                            className="hover:underline"
+                          >
+                            Upload PDF
+                          </button>
+                        )}
                       </td>
                       <td className="px-6 py-3 whitespace-nowrap">
                         <div className="flex items-center gap-4">

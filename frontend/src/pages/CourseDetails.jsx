@@ -79,7 +79,7 @@ function CourseDetails() {
       );
 
       if (res.data && res.data.payment_session_id) {
-        console.log(res.data);
+        // console.log(res.data);
         setOrderId(res.data.order_id);
         return res.data.payment_session_id;
       }
@@ -213,9 +213,9 @@ function CourseDetails() {
                 Enroll Now
               </button>
             )}
-            <p className="font-semibold text-xl text-white">
-              {course?.price} INR{" "}
-              <s className="text-base">{course?.price + 250} INR</s>
+            <p className="font-semibold text-2xl text-white">
+              ₹{course?.price} {""}
+              <s className="text-base">₹{course?.price + 250}</s>
             </p>
             <h2 className="font-medium text-lg text-white">
               Instructor: {course?.instructor?.name}
@@ -297,17 +297,51 @@ function CourseDetails() {
                   controls
                   className="rounded-xl w-full mb-4"
                 />
-                <p className="text-white">{selectedLesson.content}</p>
+                <div className="text-white prose">
+                  {typeof selectedLesson.content === "string" ? (
+                    <div className="prose prose-invert max-w-none text-white text-lg">
+                      {parse(selectedLesson.content)}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </>
             ) : (
               <></>
             )}
           </div>
-          {isEnrolled && (
-            <div className="flex justify-center items-center m-4 w-fit py-4 px-10 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-600">
-              <CircularProgressbar progress={calculateProgress()} />
-            </div>
-          )}
+          <div className="flex flex-wrap gap-2">
+            {isEnrolled && (
+              <div className="flex justify-center items-center m-4 w-fit py-4 px-10 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-600">
+                <CircularProgressbar progress={calculateProgress()} />
+              </div>
+            )}
+            {isEnrolled && (
+              <div className="m-4">
+                {course?.pdfs?.length > 0 && (
+                  <div>
+                    <h2 className="text-lg font-semibold text-white">📄 PDF Notes</h2>
+                    <ul>
+                      {course.pdfs.map((pdf, idx) => (
+                        <li key={idx} className="my-2 py-1 px-2 rounded bg-primary">
+                          <a
+                            href={pdf.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-white font-semibold"
+                            
+                          >
+                            {idx+1}{". "}{pdf.filename}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>

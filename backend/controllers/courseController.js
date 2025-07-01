@@ -34,7 +34,9 @@ const addCourse = async (req, res) => {
     // console.log("Cloudinary upload response: ", courseThumbnail);
 
     if (!courseThumbnail || !courseThumbnail.url) {
-      res.status(400).json({ message: "Course Thumbnail is required" });
+      res
+        .status(400)
+        .json({ message: "Cloudinary upload failed for course thumbnail" });
     }
 
     const newCourse = new Course({
@@ -200,6 +202,52 @@ const deleteCourse = async (req, res) => {
   }
 };
 
+const uploadPDF = async (req, res) => {
+  try {
+    const courseId = req.params.id;
+    const { filename } = req.body;
+
+    const course = await Course.findById(courseId);
+
+    if (!course) return res.status(404).json({ message: "Course not found" });
+
+    // Only the instructor who created it can upload the pdf
+    if (course.instructor.toString() !== req.user.id) {
+      return res
+        .status(403)
+        .json({ message: "Not authorized to upload the pdf" });
+    }
+
+    if (!req.files || !req.files.pdf) {
+      return res.status(400).json({ message: "File not uploaded" });
+    }
+
+    const pdfPath = req.files?.pdf[0]?.path;
+
+    if (!pdfPath) {
+      throw new ApiError(400, "PDF path is required");
+    }
+
+    const pdf = await uploadOnCloudinary(pdfPath);
+
+    if (!pdf || !pdf.url) {
+      res.status(400).json({ message: "Cloudinary upload failed for pdf" });
+    }
+
+    course.pdfs.push({ filename, url: pdf.url });
+
+    await course.save();
+
+    res
+      .status(200)
+      .json({ message: "PDF uploaded successfully", pdfs: course.pdfs });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to upload pdf", error: error.message });
+  }
+};
+
 export {
   addCourse,
   getAllCourses,
@@ -207,4 +255,5 @@ export {
   updateCourse,
   deleteCourse,
   getInstructorCourses,
+  uploadPDF,
 };

@@ -12,6 +12,7 @@ const courseSchema = new mongoose.Schema(
     studentsEnrolled: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     rating: Number,
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
+    pdfs: [{ filename: String, url: { type: String } }],
     isPublished: Boolean,
   },
   {
