@@ -21,6 +21,7 @@ import PublicOnlyRoute from "./components/ui/PublicOnlyRoute";
 import ProtectedRoute from "./components/ui/ProtectedRoute";
 import RoleProtectedRoute from "./components/ui/RoleProtectedRoute";
 import NotFound from "./components/ui/NotFound";
+import UploadPdf from "./components/ui/admin/UploadPdf";
 
 function App() {
   return (
@@ -72,6 +73,7 @@ function App() {
               <Route path="profile" element={<AdminProfile />} />
               <Route path="course/edit/:id" element={<EditCourse />} />
               <Route path="lesson/edit/:id" element={<EditLesson />} />
+              <Route path="course/upload-pdf/:id" element={<UploadPdf />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
