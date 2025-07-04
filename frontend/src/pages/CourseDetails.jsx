@@ -8,6 +8,7 @@ import { showToast } from "../helper/toastMessage.js";
 import parse from "html-react-parser";
 import { load } from "@cashfreepayments/cashfree-js";
 import CircularProgressbar from "../components/ui/CircularPrograssbar";
+import Reviews from "../components/ui/Reviews";
 
 function CourseDetails() {
   const { id } = useParams();
@@ -223,12 +224,16 @@ function CourseDetails() {
           </div>
           <div className="text-white prose">
             {typeof course?.description === "string" ? (
-              <div className="prose prose-invert max-w-none text-white text-lg">
+              <div className="prose prose-invert max-w-none text-white text-base">
                 {parse(course?.description)}
               </div>
             ) : (
               <p className="text-gray-400 italic">No description available.</p>
             )}
+          </div>
+          {/* Review Section */}
+          <div>
+            <Reviews course={course} isEnrolled={isEnrolled} />
           </div>
         </div>
         {/* Right Side Content */}
@@ -311,36 +316,46 @@ function CourseDetails() {
               <></>
             )}
           </div>
-          <div className="flex flex-wrap gap-2">
-            {isEnrolled && (
-              <div className="flex justify-center items-center m-4 w-fit py-4 px-10 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-600">
-                <CircularProgressbar progress={calculateProgress()} />
-              </div>
-            )}
-            {isEnrolled && (
-              <div className="m-4">
-                {course?.pdfs?.length > 0 && (
-                  <div>
-                    <h2 className="text-lg font-semibold text-white">📄 PDF Notes</h2>
-                    <ul>
-                      {course.pdfs.map((pdf, idx) => (
-                        <li key={idx} className="my-2 py-1 px-2 rounded bg-primary">
-                          <a
-                            href={pdf.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-white font-semibold"
-                            
+          <div className="flex flex-wrap justify-start lg:items-start items-center gap-2">
+            <div className="">
+              {isEnrolled && (
+                <div className="flex justify-center items-center m-4 w-full lg:w-fit py-4 px-10 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-600">
+                  <CircularProgressbar progress={calculateProgress()} />
+                </div>
+              )}
+            </div>
+            <div className="">
+              {isEnrolled && (
+                <div className="m-4">
+                  {course?.pdfs?.length > 0 && (
+                    <div>
+                      <h2 className="text-lg font-semibold text-white">
+                        📄 PDF Notes
+                      </h2>
+                      <ul>
+                        {course.pdfs.map((pdf, idx) => (
+                          <li
+                            key={idx}
+                            className="my-4 py-1 px-2 rounded bg-primary"
                           >
-                            {idx+1}{". "}{pdf.filename}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            )}
+                            <a
+                              href={pdf.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-white font-medium"
+                            >
+                              {idx + 1}
+                              {". "}
+                              {pdf.filename}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
