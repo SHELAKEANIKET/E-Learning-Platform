@@ -9,6 +9,7 @@ import lessonRoute from "./routes/lessonRoute.js";
 import paymentRoute from "./routes/paymentRoute.js";
 import enrollmentRoute from "./routes/enrollmentRoutes.js";
 import authRoute from "./routes/authRoute.js";
+import reviewRoute from "./routes/reviewRoute.js";
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ app.use("/api/lesson", lessonRoute);
 app.use("/api/payment", paymentRoute);
 app.use("/api/enrollment", enrollmentRoute);
 app.use("/api/auth", authRoute);
+app.use("/api/review", reviewRoute);
 
 // db connection
 connectDB();
