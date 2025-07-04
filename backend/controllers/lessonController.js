@@ -129,7 +129,7 @@ const updateLesson = async (req, res) => {
       const uploadedVideoUrl = await uploadOnCloudinary(lessonVideoUrlPath);
 
       if (!uploadedVideoUrl || !uploadedVideoUrl.url) {
-        return res.status(400).json({ message: "Cloudinary upload failed" });
+        return res.status(400).json({ message: "Cloudinary upload failed for video url" });
       }
 
       // Add uploaded image URL to newLessonData

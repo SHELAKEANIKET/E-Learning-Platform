@@ -4,7 +4,7 @@ import { PlayCircle } from "lucide-react";
 export default function Modal({ videoUrl }) {
   const [isModalOpen, setModalOpen] = useState(false);
   return (
-    <div className=" flex flex-col">
+    <div className="flex flex-col">
       <button
         className="text-primary p-1 w-fit"
         onClick={() => setModalOpen(true)}
