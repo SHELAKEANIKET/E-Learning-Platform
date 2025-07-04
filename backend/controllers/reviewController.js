@@ -38,14 +38,13 @@ const addReview = async (req, res) => {
 
     const savedReview = await review.save();
 
-    // add course to instructor's createdCourses
     // Push review to course's review array
     course.reviews.push(savedReview._id);
     await course.save();
 
     res
       .status(201)
-      .json({ review: savedReview, message: "Review added successfully ...!" });
+      .json({ review: savedReview, message: "Review added successfully!" });
   } catch (error) {
     res
       .status(500)
@@ -87,6 +86,22 @@ const updateReview = async (req, res) => {
   }
 };
 
+const getCourseReviews = async (req, res) => {
+  try {
+    const courseId = req.params.courseId;
+
+    const reviews = await Review.find({ course: courseId }).populate(
+      "user",
+      "name"
+    );
+
+    res.json(reviews);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 const deleteReview = async (req, res) => {
   try {
     const reviewId = req.params.id;
@@ -111,8 +126,8 @@ const deleteReview = async (req, res) => {
       (id) => id.toString() !== review._id.toString()
     );
     await course.save();
-    
-    res.status(200).json({ message: "Lesson deleted successfully" });
+
+    res.status(200).json({ message: "Review deleted successfully" });
   } catch (error) {
     res
       .status(500)
@@ -120,4 +135,4 @@ const deleteReview = async (req, res) => {
   }
 };
 
-export { addReview, updateReview, deleteReview };
+export { addReview, updateReview, deleteReview, getCourseReviews };
