@@ -6,39 +6,8 @@ import AddReviewModal from "./AddReviewModal";
 import axios from "axios";
 
 function Reviews({ course, isEnrolled }) {
-  // var reviews = [
-  //   {
-  //     name: "jack smith",
-  //     rating: 2,
-  //     comment:
-  //       "this is best js course this is best js course this is best js course this is best js course this is best js course",
-  //   },
-  //   {
-  //     name: "varun kumar",
-  //     rating: 2,
-  //     comment: "very nice course",
-  //   },
-  //   {
-  //     name: "rohan sharma",
-  //     rating: 5,
-  //     comment: "best js course",
-  //   },
-  //   {
-  //     name: "varun kumar",
-  //     rating: 2,
-  //     comment: "very nice course",
-  //   },
-  //   {
-  //     name: "rohan sharma",
-  //     rating: 5,
-  //     comment: "best js course",
-  //   },
-  // ];
-
   const [reviews, setReviews] = useState([]);
   const { baseUrl, user } = useApp();
-  const rev = course?.reviews; // extract the course reviews array
-  // console.log(rev);
 
   const getReviews = async () => {
     try {
@@ -75,7 +44,9 @@ function Reviews({ course, isEnrolled }) {
     <div className="flex justify-start items-start gap-1 my-10 flex-col">
       <div className="w-full flex justify-between">
         <h1 className="text-xl font-semibold text-white">Students Reviews</h1>
-        {AlreadyReviewed && <AddReviewModal course={course} />}
+        {AlreadyReviewed && (
+          <AddReviewModal course={course} isEnrolled={isEnrolled} />
+        )}
       </div>
       <div className="flex justify-start items-start flex-col overflow-y-auto scroll-smooth hide-scrollbar max-h-80 w-full">
         {reviews?.length > 0 ? (

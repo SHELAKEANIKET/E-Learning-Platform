@@ -4,7 +4,7 @@ import { useApp } from "../../context/AppContextProvider";
 import axios from "axios";
 import { IoClose } from "react-icons/io5";
 
-function AddReviewModal({ course }) {
+function AddReviewModal({ course, isEnrolled }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -52,12 +52,14 @@ function AddReviewModal({ course }) {
 
   return (
     <>
+      {isEnrolled && (
         <button
           className="bg-primary p-1 w-fit rounded text-white"
           onClick={() => setModalOpen(true)}
         >
           Review
         </button>
+      )}
       {isModalOpen ? (
         <div
           className="fixed z-50 inset-0"
