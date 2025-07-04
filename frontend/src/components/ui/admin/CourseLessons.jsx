@@ -36,7 +36,7 @@ function CourseLessons() {
     <div className="space-y-4 mx-1 lg:mx-20">
       {instructorCourses.length > 0 ? (
         <>
-          <h2 className="text-white text-xl">Course Lessons</h2>
+          <h1 className="text-white text-xl font-semibold py-4 px-1">Course Lessons</h1>
           {instructorCourses?.map((course) => (
             <div
               key={course._id}

@@ -57,7 +57,7 @@ function Courses() {
                   </h3>
                   <div className="flex items-center justify-between w-full px-2">
                     <span className="font-medium text-lg">
-                      {course.price} INR
+                      ₹{course.price}
                     </span>
                     <Link
                       to={`/course/${course._id}`}

@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import userImg from "/assets/user.jpg";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
+import { Slide } from "react-awesome-reveal";
 
 function Testimonal() {
   const [emblaRef, emblaApi] = useEmblaCarousel();
@@ -18,9 +19,11 @@ function Testimonal() {
     <div className="my-10 py-10 relative">
       <span className="absolute bg-cyan-600/40 w-40 h-40 lg:w-60 lg:h-60 rounded-full blur-3xl bottom-0 -left-10 sm:bottom-0 sm:left-0 z-10"></span>
       <div className="flex justify-center items-center flex-col gap-10 mx-4">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent leading-normal">
-          Testimonial
-        </h1>
+        <Slide triggerOnce direction="up">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent leading-normal">
+            Testimonial
+          </h1>
+        </Slide>
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex my-4 max-w-2xl">
             <div className="flex justify-center items-center gap-5 flex-col flex-shrink-0 w-full">
