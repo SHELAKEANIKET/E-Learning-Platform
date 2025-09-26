@@ -1,43 +1,40 @@
 import { useApp } from "../context/AppContextProvider";
 import React, { useEffect, useState } from "react";
 import profile from "/assets/profile.jpg";
-import axios from "axios";
+import axios, { get } from "axios";
 
 function Profile() {
   const { user, baseUrl } = useApp();
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const userId = user?._id;
-
-  const getUserDataById = async (userId) => {
-    try {
-      setLoading(true);
-      const userData = await axios.get(
-        `${baseUrl}/user/getuser?userId=${userId}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
-      const courses = userData.data.user.enrolledCourses.map(
-        (course) => course.title
-      );
-      setEnrolledCourses(courses);
-    } catch (error) {
-      console.log(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    if (user) {
-      getUserDataById(userId);
-    }
-  }, [userId]);
+    const getUserDataById = async () => {
+      if (!user?._id) return;
+      setLoading(true);
+      try {
+        const userData = await axios.get(
+          `${baseUrl}/user/getuser?userId=${user._id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
+        const courses = userData.data.user.enrolledCourses.map(
+          (course) => course.title
+        );
+        setEnrolledCourses(courses);
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getUserDataById();
+  }, [user?._id]);
 
   if (loading) {
     return (

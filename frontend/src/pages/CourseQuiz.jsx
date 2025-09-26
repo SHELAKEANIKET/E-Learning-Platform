@@ -12,6 +12,7 @@ const CourseQuiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const quizId = quiz?._id;
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   const questions = quiz?.questions;
   const [selectedOptions, setSelectedOptions] = useState(
@@ -70,6 +71,7 @@ const CourseQuiz = () => {
   };
 
   const getQuiz = async () => {
+    setLoading(true);
     try {
       const quiz = await axios.get(`${baseUrl}/quiz/${id}`, {
         headers: {
@@ -81,12 +83,22 @@ const CourseQuiz = () => {
       setQuiz(quiz.data);
     } catch (error) {
       console.log(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     getQuiz();
   }, [id]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader" />
+      </div>
+    );
+  }
 
   return (
     <div className="mt-24 text-white mx-3">
@@ -154,7 +166,7 @@ const CourseQuiz = () => {
               </div>
             </div>
           ) : (
-            "Loding..."
+            <p className="text-white text-center">No quiz available.</p>
           )}
         </div>
       </div>

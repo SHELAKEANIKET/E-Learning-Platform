@@ -30,6 +30,7 @@ function AppContextProvider({ children }) {
   };
 
   const fetchInstructorCourses = async () => {
+    setLoadingCourses(true);
     try {
       const res = await axios.get(`${baseUrl}/course/instructor/courses`, {
         headers: {
@@ -37,7 +38,7 @@ function AppContextProvider({ children }) {
         },
         withCredentials: true,
       });
-      setInstructorCourses(res.data.courses);
+      setInstructorCourses(res.data.courses || []);
     } catch (error) {
       console.error("Error fetching courses:", error.message);
     } finally {
@@ -258,7 +259,7 @@ function AppContextProvider({ children }) {
         getLessonById,
         authLoading,
         loadingCourses,
-        getInstructorQuiz
+        getInstructorQuiz,
       }}
     >
       {children}
