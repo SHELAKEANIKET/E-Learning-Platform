@@ -31,12 +31,13 @@ function Reviews({ course, isEnrolled }) {
     let stars = [];
 
     for (let i = 0; i < num; i++) {
-      stars.push(<FaStar className="text-yellow-400" />);
+      stars.push(<FaStar key={i} className="text-yellow-400" />);
     }
 
     return <span className="flex">{stars}</span>;
   }
-  const AlreadyReviewed = reviews?.some((rev) => rev.user.name !== user?.name)
+  
+  const AlreadyReviewed = reviews?.some((rev) => rev.user.name === user?.name)
     ? true
     : false;
 
@@ -44,7 +45,7 @@ function Reviews({ course, isEnrolled }) {
     <div className="flex justify-start items-start gap-1 my-10 flex-col">
       <div className="w-full flex justify-between">
         <h1 className="text-xl font-semibold text-white">Students Reviews</h1>
-        {AlreadyReviewed && (
+        {!AlreadyReviewed && (
           <AddReviewModal course={course} isEnrolled={isEnrolled} />
         )}
       </div>

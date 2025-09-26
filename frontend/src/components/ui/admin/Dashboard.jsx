@@ -5,7 +5,7 @@ import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, defaults } from "chart.js/auto";
 
 function Dashboard() {
-  const { instructorCourses, baseUrl } = useApp();
+  const { instructorCourses, baseUrl, loadingCourses } = useApp();
   const [revenueData, setRevenueData] = useState([]);
 
   useEffect(() => {
@@ -38,7 +38,11 @@ function Dashboard() {
       <div className="flex justify-center items-center lg:mx-10">
         <div className="flex justify-center items-center flex-col text-white gap-4 bg-gradient-to-r from-purple-500 to bg-blue-500 p-4 rounded-lg">
           <p className="text-2xl font-bold">Your Total Courses</p>
-          <p className="text-3xl font-bold">{instructorCourses?.length}</p>
+          {loadingCourses ? (
+            <div className="border-formBackground h-5 w-5 animate-spin rounded-full border-[3px] border-t-cyan-600" />
+          ) : (
+            <p className="text-3xl font-bold">{instructorCourses?.length}</p>
+          )}
         </div>
       </div>
 

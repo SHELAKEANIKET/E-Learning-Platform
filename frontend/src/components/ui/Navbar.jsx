@@ -41,7 +41,7 @@ function Navbar() {
     setIsOpen(!open);
   };
   return (
-    <nav className="py-4 px-4 fixed top-0 left-0 w-full shadow z-50 bg-transparent bg-opacity-5 backdrop-filter backdrop-blur-xl">
+    <nav className="p-4 fixed top-0 left-0 w-full shadow z-50 bg-transparent bg-opacity-5 backdrop-filter backdrop-blur-xl">
       <div className="px-1 lg:px-4 flex items-center justify-between gap-4 w-full max-w-screen-xl mx-auto">
         {/* Logo */}
         <div className="text-lg md:text-lg lg:text-xl font-bold bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent leading-normal">
@@ -49,7 +49,12 @@ function Navbar() {
         </div>
         <div>
           {authLoading == true ? (
-            <div className="text-white"></div>
+            <div className="flex justify-center items-center">
+              <div className="relative">
+                <div className="w-3 h-3 rounded-full absolute border-1 border-solid border-gray-200"></div>
+                <div className="w-3 h-3 rounded-full animate-spin absolute border-1 border-solid border-primary border-t-transparent"></div>
+              </div>
+            </div>
           ) : (
             <>
               {user == null && (
@@ -79,14 +84,21 @@ function Navbar() {
                   onClick={toggleDropdown}
                   className="text-white border-2 rounded-full cursor-pointer"
                 >
-                  <img src={userProfile} className="w-7 h-7 lg:w-9 lg:h-9 rounded-full" alt="userProfile" />
+                  <img
+                    src={userProfile}
+                    className="w-7 h-7 lg:w-9 lg:h-9 rounded-full"
+                    alt="userProfile"
+                  />
                 </button>
               </div>
 
               {isOpen && (
                 <div
                   ref={dropdownRef}
-                  className="absolute right-0 mt-5 w-28 bg-white shadow-lg z-10"
+                  className="absolute right-0 mt-5 w-28 bg-white shadow-lg z-10
+             before:content-[''] before:absolute before:-top-2 before:right-3
+             before:border-l-8 before:border-r-8 before:border-b-8
+             before:border-l-transparent before:border-r-transparent before:border-b-white"
                 >
                   {user?.role === "student" && (
                     <Link

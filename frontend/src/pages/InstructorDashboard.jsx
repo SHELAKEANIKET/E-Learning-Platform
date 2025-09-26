@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 function InstructorDashboard() {
   return (
-    <div className="w-full">
+    <div className="max-w-screen-xl mx-auto">
       <Sidebar />
       <div className="sm:ml-64 p-4">
         <Outlet />
@@ -14,5 +14,3 @@ function InstructorDashboard() {
 }
 
 export default InstructorDashboard;
-
-// todo - related graphs, forms - edit, add new

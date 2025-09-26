@@ -12,7 +12,7 @@ function Footer() {
   return (
     <div className="py-8 px-4 flex flex-col items-center justify-center">
       <div className="w-full h-px mb-8 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
-      <div className="mt-8 p-1 lg:mx-10 grid grid-cols-1 md:grid-cols-3 custom-width:grid-cols-3 lg:grid-cols-3 gap-10 md:gap-4 text-left text-gray-300">
+      <div className="mt-8 p-1 grid grid-cols-1 md:grid-cols-3 custom-width:grid-cols-3 lg:grid-cols-3 gap-10 md:gap-4 text-left text-gray-300">
         <div className="items-start flex flex-col md:items-start gap-3">
           <h2 className="text-xl font-semibold">About EduHub</h2>
           <p className="text-base leading-relaxed">

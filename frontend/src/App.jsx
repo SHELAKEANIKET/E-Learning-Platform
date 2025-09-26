@@ -22,6 +22,10 @@ import ProtectedRoute from "./components/ui/ProtectedRoute";
 import RoleProtectedRoute from "./components/ui/RoleProtectedRoute";
 import NotFound from "./components/ui/NotFound";
 import UploadPdf from "./components/ui/admin/UploadPdf";
+import CourseQuiz from "./pages/CourseQuiz";
+import QuizResult from "./pages/QuizResult";
+import AddQuiz from "./components/ui/admin/AddQuiz";
+import EditQuiz from "./components/ui/admin/EditQuiz";
 
 function App() {
   return (
@@ -58,6 +62,22 @@ function App() {
               }
             />
             <Route
+              path="/course/:id/quiz"
+              element={
+                <ProtectedRoute>
+                  <CourseQuiz />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/quiz/result/:quizId"
+              element={
+                <ProtectedRoute>
+                  <QuizResult />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/instructor/"
               element={
                 <RoleProtectedRoute role="instructor">
@@ -74,6 +94,8 @@ function App() {
               <Route path="course/edit/:id" element={<EditCourse />} />
               <Route path="lesson/edit/:id" element={<EditLesson />} />
               <Route path="course/upload-pdf/:id" element={<UploadPdf />} />
+              <Route path="course/add-quiz/:id" element={<AddQuiz />} />
+              <Route path="course/edit-quiz/:id" element={<EditQuiz />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

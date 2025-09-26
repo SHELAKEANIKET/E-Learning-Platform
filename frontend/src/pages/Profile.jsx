@@ -6,11 +6,13 @@ import axios from "axios";
 function Profile() {
   const { user, baseUrl } = useApp();
   const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const userId = user?._id;
 
   const getUserDataById = async (userId) => {
     try {
+      setLoading(true);
       const userData = await axios.get(
         `${baseUrl}/user/getuser?userId=${userId}`,
         {
@@ -26,6 +28,8 @@ function Profile() {
       setEnrolledCourses(courses);
     } catch (error) {
       console.log(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -34,6 +38,14 @@ function Profile() {
       getUserDataById(userId);
     }
   }, [userId]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader" />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10 my-20">

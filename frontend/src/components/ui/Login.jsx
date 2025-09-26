@@ -16,7 +16,7 @@ function Login() {
     setUserData({ ...userData, [name]: value });
   };
 
-  const { loginUser } = useApp();
+  const { loginUser, authLoading } = useApp();
   const { email, password } = userData;
   const navigate = useNavigate();
 
@@ -40,6 +40,14 @@ function Login() {
   const togglePassword = () => {
     setPasswordVisible(!passwordVisible);
   };
+
+  if (authLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader" />
+      </div>
+    );
+  }
 
   return (
     <div className="relative">

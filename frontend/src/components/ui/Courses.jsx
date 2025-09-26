@@ -16,9 +16,9 @@ function Courses() {
             Our Courses
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-5 gap-4 lg:gap-16 place-items-center my-8">
-            <LoadingAnimation/>
-            <LoadingAnimation/>
-            <LoadingAnimation/>
+            <LoadingAnimation />
+            <LoadingAnimation />
+            <LoadingAnimation />
           </div>
         </div>
       </div>
@@ -27,20 +27,20 @@ function Courses() {
 
   return (
     <div className="my-20 lg:mx-16 mx-3 relative">
-      <div className="flex justify-center items-center flex-col">
+      <div className="flex justify-center items-center flex-col w-full">
         <Zoom triggerOnce>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-gradient-start to-gradient-end bg-clip-text text-transparent leading-normal">
             Our Courses
           </h1>
         </Zoom>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-4 gap-4 lg:gap-5 place-items-center my-8">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 custom-width:grid-cols-3 lg:grid-cols-3 mx-4 gap-4 lg:gap-5 place-items-center my-8">
           {courses &&
             courses?.slice(0, 3).map((course, index) => (
               <div
-                className="rounded-lg overflow-hidden shadow-md shadow-primary/30 flex justify-center items-center flex-col lg:w-84 w-full hover:transform hover:scale-105 transition-all duration-500 border-2 border-primary/20"
+                className="rounded-lg overflow-hidden shadow-md shadow-primary/30 flex justify-center items-center flex-col border-2 border-primary/20"
                 key={course._id}
               >
-                <div className="flex justify-center items-start flex-col w-full text-white gap-1 pb-2 z-20">
+                <div className="flex justify-center items-start flex-col max-w-[340px] text-white gap-1 pb-2 z-20">
                   <div className="h-56 flex justify-center items-center w-full">
                     <img
                       className="w-full h-full max-h-full object-fill"
@@ -56,9 +56,7 @@ function Courses() {
                     {course.title}
                   </h3>
                   <div className="flex items-center justify-between w-full px-2">
-                    <span className="font-medium text-lg">
-                      ₹{course.price}
-                    </span>
+                    <span className="font-medium text-lg">₹{course.price}</span>
                     <Link
                       to={`/course/${course._id}`}
                       className="bg-primary text-white font-medium py-1.5 px-2 shadow rounded"

@@ -1,4 +1,4 @@
-import { showToast } from "../helper/toastMessage";
+import { showToast } from "../helper/toastMessage.js";
 import axios from "axios";
 import React, { createContext, useContext, useState, useEffect } from "react";
 
@@ -14,6 +14,7 @@ function AppContextProvider({ children }) {
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [instructorCourses, setInstructorCourses] = useState([]); // only instructor courses
+  const [loadingCourses, setLoadingCourses] = useState(true);
 
   const fetchCourses = async () => {
     try {
@@ -39,11 +40,14 @@ function AppContextProvider({ children }) {
       setInstructorCourses(res.data.courses);
     } catch (error) {
       console.error("Error fetching courses:", error.message);
+    } finally {
+      setLoadingCourses(false);
     }
   };
 
   // authentication
   const checkAuth = async () => {
+    setAuthLoading(true);
     try {
       const res = await axios.get(`${baseUrl}/auth/check`, {
         headers: {
@@ -109,6 +113,11 @@ function AppContextProvider({ children }) {
       const res = await axios.get(`${baseUrl}/user/logout`, {
         withCredentials: true,
       });
+
+      if (res.status === 200) {
+        showToast(res.data.message, "success");
+      }
+
       setUser(null);
     } catch (error) {
       console.error("Logout user error:", error.message);
@@ -140,6 +149,10 @@ function AppContextProvider({ children }) {
         }
       );
 
+      if (res.status === 201) {
+        showToast(res.data.message, "success");
+      }
+
       return res;
     } catch (error) {
       console.error("Error while adding new course:", error.message);
@@ -162,6 +175,11 @@ function AppContextProvider({ children }) {
           withCredentials: true,
         }
       );
+
+      if (res.status === 201) {
+        showToast(res.data.message, "success");
+      }
+
       return res;
     } catch (error) {
       console.error("Error while adding new lessons:", error.message);
@@ -198,6 +216,20 @@ function AppContextProvider({ children }) {
     }
   };
 
+  const getInstructorQuiz = async (id) => {
+    try {
+      const quiz = await axios.get(`${baseUrl}/quiz/instructor/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      return quiz;
+    } catch (error) {
+      console.log("Error while fetching the quiz:", error.message);
+    }
+  };
+
   useEffect(() => {
     fetchCourses();
     checkAuth();
@@ -225,6 +257,8 @@ function AppContextProvider({ children }) {
         addLessonInCourse,
         getLessonById,
         authLoading,
+        loadingCourses,
+        getInstructorQuiz
       }}
     >
       {children}

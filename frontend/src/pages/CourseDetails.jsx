@@ -3,7 +3,7 @@ import axios from "axios";
 import { PlayCircle } from "lucide-react";
 import starIcon from "/assets/star.png";
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { showToast } from "../helper/toastMessage.js";
 import parse from "html-react-parser";
 import { load } from "@cashfreepayments/cashfree-js";
@@ -23,7 +23,7 @@ function CourseDetails() {
   const navigate = useNavigate();
 
   // get the course by id
-  const getCourseByID = async (req, res) => {
+  const getCourseByID = async () => {
     const result = await axios.get(`${baseUrl}/course/${id}`, {
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +41,7 @@ function CourseDetails() {
 
   // check if user is enrolled in course or not
   const isEnrolled = course?.studentsEnrolled?.some(
-    (student) => student._id.toString() === user?._id.toString()
+    (student) => student?._id?.toString() === user?._id?.toString()
   );
 
   const handleLessonClick = async (lesson) => {
@@ -137,7 +137,9 @@ function CourseDetails() {
   };
 
   useEffect(() => {
-    fetchEnrollment(); // refresh UI state
+    if (courseId) {
+      fetchEnrollment();
+    } // refresh UI state
   }, [courseId]);
 
   // mark as complete
@@ -222,7 +224,7 @@ function CourseDetails() {
               Instructor: {course?.instructor?.name}
             </h2>
           </div>
-          <div className="text-white prose">
+          <div className="text-white prose text-justify lg:text-left">
             {typeof course?.description === "string" ? (
               <div className="prose prose-invert max-w-none text-white text-base">
                 {parse(course?.description)}
@@ -317,13 +319,24 @@ function CourseDetails() {
             )}
           </div>
           <div className="flex flex-wrap justify-start lg:items-start items-center gap-2">
-            <div className="">
+            <div className="m-4 flex flex-col gap-5">
               {isEnrolled && (
-                <div className="flex justify-center items-center m-4 w-full lg:w-fit py-4 px-10 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-600">
-                  <CircularProgressbar progress={calculateProgress()} />
-                </div>
+                <>
+                  <div className="flex justify-center items-center py-4 px-10 lg:w-fit rounded-lg bg-gradient-to-r from-blue-500 to-cyan-600">
+                    <CircularProgressbar progress={calculateProgress()} />
+                  </div>
+                  <div className="w-full">
+                    <Link
+                      to={`/course/${courseId}/quiz`}
+                      className="text-white bg-primary rounded text-lg font-semibold px-3 py-1"
+                    >
+                      Take Quiz
+                    </Link>
+                  </div>
+                </>
               )}
             </div>
+
             <div className="">
               {isEnrolled && (
                 <div className="m-4">
