@@ -123,6 +123,23 @@ const getCourseById = async (req, res) => {
   }
 };
 
+// get course name by courseId
+const getCourseNameById = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id).select("title");
+
+    if (!course) return res.status(404).json({ message: "Course not found" });
+
+    console.log("course data from backend: ",course);
+
+    res.status(200).json(course);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to fetch course", error: error.message });
+  }
+};
+
 const updateCourse = async (req, res) => {
   try {
     const courseId = req.params.id;
@@ -252,6 +269,7 @@ export {
   addCourse,
   getAllCourses,
   getCourseById,
+  getCourseNameById,
   updateCourse,
   deleteCourse,
   getInstructorCourses,

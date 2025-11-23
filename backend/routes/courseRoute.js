@@ -5,6 +5,7 @@ import {
   addCourse,
   getAllCourses,
   getCourseById,
+  getCourseNameById,
   updateCourse,
   deleteCourse,
   getInstructorCourses,
@@ -26,6 +27,7 @@ router.post(
 router.get("/", getAllCourses);
 router.get("/instructor/courses", authMiddleware, getInstructorCourses);
 router.get("/:id", getCourseById);
+router.get("/:id/name", getCourseNameById);
 router.put(
   "/edit/:id",
   upload.fields([
