@@ -202,7 +202,7 @@ const CourseDiscussion = () => {
             )}
           </div>
           <div className="text-sm text-gray-500">
-            Signed in as{" "}
+            {" "}
             <span className="font-medium text-[#303030] capitalize">
               {userName}
             </span>
