@@ -26,6 +26,7 @@ import CourseQuiz from "./pages/CourseQuiz";
 import QuizResult from "./pages/QuizResult";
 import AddQuiz from "./components/ui/admin/AddQuiz";
 import EditQuiz from "./components/ui/admin/EditQuiz";
+import CourseDiscussion from "./pages/CourseDiscussion";
 
 function App() {
   return (
@@ -70,10 +71,26 @@ function App() {
               }
             />
             <Route
+              path="/course/:id/quiz"
+              element={
+                <ProtectedRoute>
+                  <CourseQuiz />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/quiz/result/:quizId"
               element={
                 <ProtectedRoute>
                   <QuizResult />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/discussion-messages/:courseId"
+              element={
+                <ProtectedRoute>
+                  <CourseDiscussion />
                 </ProtectedRoute>
               }
             />

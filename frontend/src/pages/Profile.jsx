@@ -1,7 +1,7 @@
 import { useApp } from "../context/AppContextProvider";
 import React, { useEffect, useState } from "react";
 import profile from "/assets/profile.jpg";
-import axios, { get } from "axios";
+import axios from "axios";
 
 function Profile() {
   const { user, baseUrl } = useApp();

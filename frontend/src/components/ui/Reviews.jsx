@@ -19,7 +19,7 @@ function Reviews({ course, isEnrolled }) {
       });
       setReviews(res.data);
     } catch (error) {
-      console.log("Error:", error);
+      console.log("Error:", error.message);
     }
   };
 
@@ -36,7 +36,7 @@ function Reviews({ course, isEnrolled }) {
 
     return <span className="flex">{stars}</span>;
   }
-  
+
   const AlreadyReviewed = reviews?.some((rev) => rev.user.name === user?.name)
     ? true
     : false;

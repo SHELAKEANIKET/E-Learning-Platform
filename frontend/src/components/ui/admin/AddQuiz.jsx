@@ -43,7 +43,7 @@ function AddQuiz() {
   // add new option field
   const addOption = (qIndex) => {
     const updatedQuestions = [...quiz.questions];
-    updatedQuestions[qIndex].options.push("");
+    updatedQuestions[qIndex].options.push(""); // add empty option
     setQuiz({ ...quiz, questions: updatedQuestions });
   };
 
@@ -53,7 +53,7 @@ function AddQuiz() {
       ...quiz,
       questions: [
         ...quiz.questions,
-        { question: "", options: [], correctAnswer: "" },
+        { question: "", options: [], correctAnswer: "" }, // new question object
       ],
     });
   };

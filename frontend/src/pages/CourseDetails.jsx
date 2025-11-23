@@ -44,6 +44,8 @@ function CourseDetails() {
     (student) => student?._id?.toString() === user?._id?.toString()
   );
 
+  const isInstructor = course?.instructor?.name === user?.name;
+
   const handleLessonClick = async (lesson) => {
     if (user === null || isEnrolled === false) {
       showToast("Access denied. Not enrolled", "error");
@@ -322,22 +324,30 @@ function CourseDetails() {
             <div className="m-4 flex flex-col gap-5">
               {isEnrolled && (
                 <>
-                  <div className="flex justify-center items-center py-4 px-10 lg:w-fit rounded-lg bg-gradient-to-r from-blue-500 to-cyan-600">
+                  <div className="flex justify-center items-center py-4 px-10 lg:w-fit rounded-lg bg-gradient-to-r from-blue-500 to-cyan-600 ">
                     <CircularProgressbar progress={calculateProgress()} />
                   </div>
-                  <div className="w-full">
+                  <div className="w-full space-x-4">
                     <Link
                       to={`/course/${courseId}/quiz`}
-                      className="text-white bg-primary rounded text-lg font-semibold px-3 py-1"
+                      className="text-white bg-primary rounded text-lg font-medium px-3 py-1"
                     >
                       Take Quiz
                     </Link>
                   </div>
                 </>
               )}
+              {(isInstructor || isEnrolled) && (
+                <Link
+                  to={`/discussion-messages/${courseId}`}
+                  className="text-white bg-primary rounded text-lg font-medium px-3 py-1"
+                >
+                  Course Discussion
+                </Link>
+              )}
             </div>
 
-            <div className="">
+            <div className="m-4">
               {isEnrolled && (
                 <div className="m-4">
                   {course?.pdfs?.length > 0 && (

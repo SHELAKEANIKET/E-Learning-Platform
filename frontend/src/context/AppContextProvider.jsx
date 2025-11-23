@@ -10,6 +10,7 @@ export const useApp = () => {
 
 function AppContextProvider({ children }) {
   const baseUrl = "https://e-learning-platform-ht9m.onrender.com/api";
+  // const baseUrl = "http://localhost:9000/api";
   const [courses, setCourses] = useState([]); // all courses
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
@@ -187,6 +188,20 @@ function AppContextProvider({ children }) {
     }
   };
 
+  const getCourseNameById = async (id) => {
+    try {
+      const res = await axios.get(`${baseUrl}/course/${id}/name`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+
+      return res;
+    } catch (error) {
+      console.error("Error while fetching the course:", error.message);
+    }
+  };
   const getCourseById = async (id) => {
     try {
       const res = await axios.get(`${baseUrl}/course/${id}`, {
@@ -255,6 +270,7 @@ function AppContextProvider({ children }) {
         addCourse,
         setCourses,
         getCourseById,
+        getCourseNameById,
         addLessonInCourse,
         getLessonById,
         authLoading,

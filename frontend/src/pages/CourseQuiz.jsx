@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 const CourseQuiz = () => {
   const { baseUrl } = useApp();
   const [quiz, setQuiz] = useState([]);
-  const { id } = useParams();
+  const { id } = useParams(); // course id
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const quizId = quiz?._id;
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ const CourseQuiz = () => {
       navigate(`/quiz/result/${quizId}`, {
         state: { freshResult: result.data },
       });
-      setSelectedOptions(null); // unselect the selected options
+      setSelectedOptions(null); // unselect the selected options after quiz submit
     } catch (error) {
       console.log(error.message);
     }
@@ -66,8 +66,8 @@ const CourseQuiz = () => {
   // handle option select
   const handleSelect = (questionIndex, optionIndex) => {
     const updated = [...selectedOptions];
-    updated[questionIndex] = optionIndex; // keep the choice
-    setSelectedOptions(updated);
+    updated[questionIndex] = optionIndex; // keep the choice of option
+    setSelectedOptions(updated); // update the array
   };
 
   const getQuiz = async () => {
