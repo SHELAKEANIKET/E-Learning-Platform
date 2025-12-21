@@ -18,6 +18,7 @@ function CourseDetails() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [orderId, setOrderId] = useState("");
   const [enrollment, setEnrollment] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const { baseUrl, user } = useApp();
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ function CourseDetails() {
       return;
     }
     setSelectedLesson(lesson);
+    setModalOpen(true);
   };
 
   // payment integration
@@ -175,6 +177,31 @@ function CourseDetails() {
     return Math.floor((completed / totalLessons) * 100); // percentage
   };
 
+  function VideoModal({ open, onClose, lesson }) {
+    if (!open || !lesson) return null;
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
+        <div className="bg-neutral-900 rounded-xl p-6 max-w-2xl w-full relative">
+          <button
+            className="absolute top-2 right-2 text-white text-2xl"
+            onClick={onClose}
+          >
+            &times;
+          </button>
+          <h2 className="text-2xl font-bold mb-4 text-white">{lesson.title}</h2>
+          <video
+            src={lesson.videoUrl}
+            controls
+            className="w-full rounded-xl mb-4 shadow-md"
+          />
+          <div className="text-white prose prose-invert max-w-none text-lg">
+            {typeof lesson.content === "string" ? parse(lesson.content) : null}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // loading animation
   if (course == null) {
     return (
@@ -241,147 +268,124 @@ function CourseDetails() {
           </div>
         </div>
         {/* Right Side Content */}
-        <div className="bg-formBackground p-4 h-fit">
-          <h3 className="text-2xl font-semibold mb-4 text-white">
+        <div className="bg-neutral-800 p-6 rounded-xl shadow-lg h-fit">
+          <h3 className="text-2xl font-semibold mb-6 text-white flex items-center gap-2">
             📚 Course Content
           </h3>
-          <div className="rounded-2xl shadow-md border-2 border-borderColor overflow-hidden">
-            <h2 className="text-xl font-semibold mb-4 bg-white/95 px-4 py-2">
-              Lessons
+          <div className="bg-neutral-700 rounded-xl overflow-hidden shadow-md">
+            <h2 className="text-xl font-medium bg-neutral-600 px-6 py-4 text-white">
+              Lessons ({course?.lessons?.length || 0})
             </h2>
             {course.lessons.length > 0 ? (
-              <ul className="space-y-3 p-4">
+              <ul className="divide-y divide-neutral-600">
                 {course?.lessons?.map((lesson, index) => {
                   const isCompleted = enrollment?.progress?.some(
                     (item) =>
                       item.lessonId === lesson._id && item.completed == true
                   );
                   return (
-                    <div
-                      className="flex justify-between items-center flex-wrap gap-2"
+                    <li
                       key={lesson._id}
+                      className={`p-4 hover:bg-neutral-600 transition-colors ${
+                        selectedLesson?._id === lesson._id ? "bg-neutral-500" : ""
+                      }`}
                     >
-                      <li
-                        className={`flex items-center justify-between p-3 rounded-lg cursor-pointer border-[1.5px] border-borderColor hover:bg-white hover:text-black transition ${
-                          selectedLesson?._id === lesson._id
-                            ? "bg-white/80 text-black"
-                            : "text-white"
-                        } ${isEnrolled ? "w-full lg:w-[70%]" : "w-full"}`}
-                        onClick={() => handleLessonClick(lesson)}
-                      >
-                        <span className="font-medium">
-                          {index + 1}. {lesson.title}
-                        </span>
-                        <PlayCircle className="text-[#1cb49b]" size={20} />
-                      </li>
-                      {isEnrolled && (
-                        <button
-                          disabled={isCompleted}
-                          onClick={() => markProgress(lesson._id)}
-                          className={`px-3 py-2 rounded text-sm ${
-                            isCompleted
-                              ? "bg-primary text-white cursor-not-allowed"
-                              : "bg-primary text-white"
-                          }`}
+                      <div className="flex items-center justify-between">
+                        <div
+                          className="flex items-center gap-3 cursor-pointer flex-1"
+                          onClick={() => handleLessonClick(lesson)}
                         >
-                          {isCompleted ? "Completed" : "Mark as Complete"}
-                        </button>
-                      )}
-                    </div>
+                          <PlayCircle className="text-primary w-5 h-5" />
+                          <span className="font-medium text-white">
+                            {index + 1}. {lesson.title}
+                          </span>
+                        </div>
+                        {isEnrolled && (
+                          <button
+                            disabled={isCompleted}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              markProgress(lesson._id);
+                            }}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                              isCompleted
+                                ? "bg-primary text-white cursor-not-allowed"
+                                : "bg-transparent border-2 hover:bg-primary text-white"
+                            }`}
+                          >
+                            {isCompleted ? "✓ Completed" : "Mark Complete"}
+                          </button>
+                        )}
+                      </div>
+                    </li>
                   );
                 })}
               </ul>
             ) : (
-              <p className="p-4 text-white">No Lessons Added</p>
+              <p className="p-6 text-gray-400">No Lessons Added</p>
             )}
           </div>
-          <div className="lg:col-span-2 p-4 my-2">
-            {user !== null && selectedLesson ? (
-              <>
-                <h3 className="text-2xl font-semibold mb-2 text-gray-100">
-                  {selectedLesson.title}
-                </h3>
-                <video
-                  src={selectedLesson.videoUrl}
-                  controls
-                  className="rounded-xl w-full mb-4"
-                />
-                <div className="text-white prose">
-                  {typeof selectedLesson.content === "string" ? (
-                    <div className="prose prose-invert max-w-none text-white text-lg">
-                      {parse(selectedLesson.content)}
-                    </div>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </>
-            ) : (
-              <></>
-            )}
-          </div>
-          <div className="flex flex-wrap justify-start lg:items-start items-center gap-2">
-            <div className="m-4 flex flex-col gap-5">
-              {isEnrolled && (
-                <>
-                  <div className="flex justify-center items-center py-4 px-10 lg:w-fit rounded-lg bg-gradient-to-r from-blue-500 to-cyan-600 ">
-                    <CircularProgressbar progress={calculateProgress()} />
-                  </div>
-                  <div className="w-full space-x-4">
-                    <Link
-                      to={`/course/${courseId}/quiz`}
-                      className="text-white bg-primary rounded text-lg font-medium px-3 py-1"
-                    >
-                      Take Quiz
-                    </Link>
-                  </div>
-                </>
-              )}
-              {(isInstructor || isEnrolled) && (
-                <Link
-                  to={`/discussion-messages/${courseId}`}
-                  className="text-white bg-primary rounded text-lg font-medium px-3 py-1"
-                >
-                  Course Discussion
-                </Link>
-              )}
-            </div>
 
-            <div className="m-4">
-              {isEnrolled && (
-                <div className="m-4">
-                  {course?.pdfs?.length > 0 && (
-                    <div>
-                      <h2 className="text-lg font-semibold text-white">
-                        📄 PDF Notes
-                      </h2>
-                      <ul>
-                        {course.pdfs.map((pdf, idx) => (
-                          <li
-                            key={idx}
-                            className="my-4 py-1 px-2 rounded bg-primary"
-                          >
-                            <a
-                              href={pdf.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-white font-medium"
-                            >
-                              {idx + 1}
-                              {". "}
-                              {pdf.filename}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+          {/* Progress and Actions */}
+          {isEnrolled && (
+            <div className="mt-6 space-y-4">
+              <div className="bg-neutral-700 p-4 rounded-xl">
+                <h4 className="text-lg font-semibold text-white mb-3">
+                  Your Progress
+                </h4>
+                <div className="flex justify-center">
+                  <CircularProgressbar progress={calculateProgress()} />
                 </div>
-              )}
+              </div>
+              <div className="flex flex-col lg:flex-row gap-3 justify-center items-center">
+                <Link
+                  to={`/course/${courseId}/quiz`}
+                  className="block w-full bg-gradient-to-r from-gradient-start to-gradient-end text-white py-3 px-4 rounded-lg font-medium text-center transition-colors"
+                >
+                  📝 Take Quiz
+                </Link>
+                {(isInstructor || isEnrolled) && (
+                  <Link
+                    to={`/discussion-messages/${courseId}`}
+                    className="block w-full bg-gradient-to-r from-gradient-end to-gradient-start text-white py-3 px-4 rounded-lg font-medium text-center transition-colors"
+                  >
+                    💬 Course Discussion
+                  </Link>
+                )}
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* PDFs */}
+          {isEnrolled && course?.pdfs?.length > 0 && (
+            <div className="mt-6 bg-neutral-700 p-4 rounded-xl">
+              <h4 className="text-lg font-semibold text-white mb-3">
+                📄 PDF Notes
+              </h4>
+              <ul className="space-y-2">
+                {course.pdfs.map((pdf, idx) => (
+                  <li key={idx} className="border p-3 rounded-lg">
+                    <a
+                      href={pdf.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white font-medium"
+                    >
+                      {idx + 1}. {pdf.filename} ⬇️
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
+
+      <VideoModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        lesson={selectedLesson}
+      />
     </>
   );
 }
