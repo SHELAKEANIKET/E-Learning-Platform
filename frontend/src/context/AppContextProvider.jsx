@@ -9,8 +9,7 @@ export const useApp = () => {
 };
 
 function AppContextProvider({ children }) {
-  const baseUrl = "https://e-learning-platform-ht9m.onrender.com/api";
-  // const baseUrl = "http://localhost:9000/api";
+  const baseUrl = "http://localhost:9000/api" || import.meta.env.VITE_BASE_URL;
   const [courses, setCourses] = useState([]); // all courses
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
@@ -75,7 +74,7 @@ function AppContextProvider({ children }) {
             "Content-Type": "application/json",
           },
           withCredentials: true,
-        }
+        },
       );
       if (res.status == 201) {
         showToast(res.data.message, "success");
@@ -97,7 +96,7 @@ function AppContextProvider({ children }) {
             "Content-Type": "application/json",
           },
           withCredentials: true,
-        }
+        },
       );
 
       if (res.status === 200) {
@@ -148,7 +147,7 @@ function AppContextProvider({ children }) {
             "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
-        }
+        },
       );
 
       if (res.status === 201) {
@@ -175,7 +174,7 @@ function AppContextProvider({ children }) {
             "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
-        }
+        },
       );
 
       if (res.status === 201) {

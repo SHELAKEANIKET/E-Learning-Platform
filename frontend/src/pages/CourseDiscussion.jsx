@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { connectWebSocket } from "../helper/webSocket.js";
 import axios from "axios";
 
+const reactionOptions = ["👍", "❤️", "😂", "😮", "😢"];
+
 const CourseDiscussion = () => {
   const { baseUrl, user, getCourseNameById } = useApp();
   const { courseId } = useParams();
@@ -16,6 +18,7 @@ const CourseDiscussion = () => {
   const [text, setText] = useState(""); // input message
   const [typers, setTypers] = useState([]); // names of typers
   const [courseData, setCourseData] = useState("");
+  const [openReactionMessage, setOpenReactionMessage] = useState(null);
 
   const getMessages = async () => {
     setLoading(true);
@@ -87,6 +90,14 @@ const CourseDiscussion = () => {
       });
     });
 
+    socket.current.on("reactionUpdated", ({ messageId, reactions }) => {
+      setMessages((prev) =>
+        prev.map((message) =>
+          message._id === messageId ? { ...message, reactions } : message
+        )
+      );
+    });
+
     // listen typers name - typing event
     socket.current.on("typing", (userName) => {
       setTypers((prev) => {
@@ -109,6 +120,7 @@ const CourseDiscussion = () => {
       socket.current.off("join_room");
       socket.current.off("newMessage");
       socket.current.off("messageConfirmed");
+      socket.current.off("reactionUpdated");
       socket.current.off("typing");
       socket.current.off("stopTyping");
       socket.current.disconnect();
@@ -178,6 +190,39 @@ const CourseDiscussion = () => {
       e.preventDefault();
       sendMessage();
     }
+  }
+
+  async function handleReaction(messageId, emoji) {
+    if (!messageId) return;
+
+    try {
+      const res = await axios.post(
+        `${baseUrl}/discussion-messages/${messageId}/reactions`,
+        { emoji },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      setMessages((prev) =>
+        prev.map((message) =>
+          message._id === messageId
+            ? { ...message, reactions: res.data.reactions }
+            : message
+        )
+      );
+      setOpenReactionMessage(null);
+    } catch (error) {
+      console.error("Failed to update reaction:", error.message);
+    }
+  }
+
+  function getReactionCounts(reactions = []) {
+    return reactions.reduce((counts, reaction) => {
+      counts[reaction.emoji] = (counts[reaction.emoji] || 0) + 1;
+      return counts;
+    }, {});
   }
 
   return (
@@ -256,11 +301,57 @@ const CourseDiscussion = () => {
                       )}
                     </div>
 
-                    {/* <div className="flex justify-end items-center mt-1">
-                      <div className="text-[11px] text-gray-500 text-right">
-                        {formatTime(msg.createdAt)}
+                    {Object.entries(getReactionCounts(msg.reactions)).length >
+                      0 && (
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {Object.entries(getReactionCounts(msg.reactions)).map(
+                          ([emoji, count]) => (
+                            <button
+                              key={emoji}
+                              type="button"
+                              onClick={() => handleReaction(msg._id, emoji)}
+                              className="px-2 py-0.5 rounded-full bg-white/70 border border-gray-200 text-xs hover:bg-white"
+                              title={`React with ${emoji}`}
+                            >
+                              {emoji} {count}
+                            </button>
+                          )
+                        )}
                       </div>
-                    </div> */}
+                    )}
+
+                    {msg._id && (
+                      <div className="relative flex justify-end mt-2">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setOpenReactionMessage((current) =>
+                              current === msg._id ? null : msg._id
+                            )
+                          }
+                          className="text-base leading-none opacity-70 hover:opacity-100"
+                          aria-label="Add reaction"
+                          title="Add reaction"
+                        >
+                          +
+                        </button>
+                        {openReactionMessage === msg._id && (
+                          <div className="absolute right-0 bottom-6 z-10 flex gap-1 rounded-full bg-white p-1 shadow-lg border border-gray-200">
+                            {reactionOptions.map((emoji) => (
+                              <button
+                                key={emoji}
+                                type="button"
+                                onClick={() => handleReaction(msg._id, emoji)}
+                                className="h-7 w-7 rounded-full hover:bg-gray-100"
+                                aria-label={`React with ${emoji}`}
+                              >
+                                {emoji}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               );

@@ -130,8 +130,6 @@ const getCourseNameById = async (req, res) => {
 
     if (!course) return res.status(404).json({ message: "Course not found" });
 
-    console.log("course data from backend: ",course);
-
     res.status(200).json(course);
   } catch (error) {
     res

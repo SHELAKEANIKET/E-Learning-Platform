@@ -1,6 +1,6 @@
 import { Course } from "../models/course.model.js";
 import { Quiz } from "../models/quiz.model.js";
-import { QuizResult } from "../models/QuizResult.model.js";
+import { QuizResult } from "../models/quizResult.model.js";
 
 // add the quiz for course
 const addQuiz = async (req, res) => {

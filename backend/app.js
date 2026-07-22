@@ -15,8 +15,18 @@ import discussionMessagesRoute from "./routes/discussionMessages.js";
 import { createServer } from "node:http"; // inbuilt module
 import { Server } from "socket.io";
 import { DiscussionMessage } from "./models/discussionMessages.model.js";
+import healthRoute from "./routes/healthRoute.js";
+import { rateLimit } from 'express-rate-limit'
 
 dotenv.config();
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  ipv6Subnet: 56, // Set to 60 or 64 to be less aggressive, or 52 or 48 to be more aggressive
+})
 
 const app = express();
 const server = createServer(app);
@@ -26,12 +36,13 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://eduhub-elearning.vercel.app",
-    // origin: true, // change the url
+    // origin: "https://eduhub-elearning.vercel.app",
+    origin: true, // change the url
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
+app.use(limiter)
 
 // ✅ Initialize Socket.io
 const io = new Server(server, {
@@ -41,6 +52,7 @@ const io = new Server(server, {
     credentials: true,
   },
 });
+app.locals.io = io;
 
 //! testing
 app.get("/", (req, res) => {
@@ -56,6 +68,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/review", reviewRoute);
 app.use("/api/quiz", quizRoute);
 app.use("/api/discussion-messages", discussionMessagesRoute);
+app.use("/api/", healthRoute);
 
 // db connection
 connectDB();
