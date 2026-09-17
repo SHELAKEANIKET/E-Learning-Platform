@@ -59,6 +59,11 @@ app.get("/", (req, res) => {
   res.json({ message: "backend is working fine..." });
 });
 
+// health check route
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", message: "Server is healthy" });
+});
+
 app.use("/api/user", userRoute);
 app.use("/api/course", courseRoute);
 app.use("/api/lesson", lessonRoute);
