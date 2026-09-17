@@ -8,7 +8,7 @@ import LoadingToast from "../components/ui/LoadingToast";
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
-  const baseUrl = "http://localhost:9000/api" || import.meta.env.VITE_BASE_URL;
+  const baseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:9000/api";
 
   useEffect(() => {
     fetch(`${baseUrl}/health`)

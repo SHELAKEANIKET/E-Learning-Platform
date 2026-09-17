@@ -9,7 +9,7 @@ export const useApp = () => {
 };
 
 function AppContextProvider({ children }) {
-  const baseUrl = "http://localhost:9000/api" || import.meta.env.VITE_BASE_URL;
+  const baseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:9000/api";
   const [courses, setCourses] = useState([]); // all courses
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
